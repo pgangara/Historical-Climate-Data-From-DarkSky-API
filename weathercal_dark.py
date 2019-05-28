@@ -5,7 +5,7 @@ import getpass
 import pyodbc
 import os
 os.chdir(r"C:\Users\pujitha.gangarapu\Documents\Projects\Return Prediction")
-cnxn = pyodbc.connect('DRIVER={SQL Server};SERVER=SSECOGNOSDB;DATABASE=master;trusted_connection=yes')
+cnxn = pyodbc.connect('DRIVER={SQL Server};SERVER=Server Name;DATABASE=master;trusted_connection=yes')
 query = """ SELECT ZLZIP,z.Latitude,z.Longitude
  FROM BIDW_Wynne.dbo.AS400_DIM_SYSLOCFL loc
  INNER JOIN Analytics.dbo.USZipcodes z on z.Zipcode = loc.ZLZIP """
@@ -13,8 +13,8 @@ query = """ SELECT ZLZIP,z.Latitude,z.Longitude
 df = pd.read_sql(query,cnxn)
 df = df.to_dict('records')
 
-api_key = '7c724271bce395883b04aa2441345957'
-#api_key = '85e528863838d38bc772c66e6ba8ba8b'
+api_key = 'your-key'
+
 date = datetime.datetime(2015,1,1)
 latitude = 40.5956
 longitude = -82.1129

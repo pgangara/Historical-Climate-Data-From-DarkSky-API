@@ -4,11 +4,8 @@ import forecastio
 import getpass
 import pyodbc
 import os
-os.chdir(r"C:\Users\pujitha.gangarapu\Documents\Projects\Return Prediction")
 cnxn = pyodbc.connect('DRIVER={SQL Server};SERVER=Server Name;DATABASE=master;trusted_connection=yes')
-query = """ SELECT ZLZIP,z.Latitude,z.Longitude
- FROM BIDW_Wynne.dbo.AS400_DIM_SYSLOCFL loc
- INNER JOIN Analytics.dbo.USZipcodes z on z.Zipcode = loc.ZLZIP """
+query = """ Query to get zipcodes """
 
 df = pd.read_sql(query,cnxn)
 df = df.to_dict('records')
@@ -52,7 +49,7 @@ def df_sql(df,cnxn):
     cursor = cnxn.cursor()
 
     for index,row in df.iterrows():
-        cursor.execute("INSERT INTO Analytics.dbo.HistoricalWeather([HistoryDate],[Zipcode],[Summary],[Icon],[TemperatureHigh],[TemperatureLow]) values (?,?,?,?,?,?)",row['HistoryDate'],row['Zipcode'],row['Summary'],row['Icon'],row['TemperatureHigh'],row['TemperatureLow'])
+        cursor.execute("INSERT INTO Table_Name([HistoryDate],[Zipcode],[Summary],[Icon],[TemperatureHigh],[TemperatureLow]) values (?,?,?,?,?,?)",row['HistoryDate'],row['Zipcode'],row['Summary'],row['Icon'],row['TemperatureHigh'],row['TemperatureLow'])
         cnxn.commit()
     cursor.close()
     cnxn.close()
